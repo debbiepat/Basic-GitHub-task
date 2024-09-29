@@ -1,0 +1,10 @@
+pm.test("Status code should be 201", function () {
+    pm.response.to.have.status(201);
+});
+pm.test("Status code name should have an OK string", function () {
+    pm.response.to.have.status("Created");
+});
+
+const OrderID = pm.response.json();
+
+pm.environment.set("OrderId", OrderID.orderId);

@@ -1,0 +1,24 @@
+pm.test("Status code should be 200", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("Status code name should have an OK string", function () {
+    pm.response.to.have.status("OK");
+});
+
+var jsonData = pm.response.json();
+console.log(jsonData)
+
+
+pm.test("Confirm that the total result is 9", function () {    
+    pm.expect(jsonData.links.length).to.eql(9);
+});
+
+pm.test("Confirm that the entry with name has value", function () {    
+    pm.expect(jsonData.links[1].rel).to.eql("openapi");
+});
+
+
+pm.test("Confirm that health is present in the entry or result", function () {    
+    pm.expect(pm.response.text()).to.include("health");
+});
+

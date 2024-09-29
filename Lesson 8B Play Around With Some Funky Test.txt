@@ -1,0 +1,25 @@
+pm.test("Status code should be 200", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("Status code name should have an OK string", function () {
+    pm.response.to.have.status("OK");
+});
+
+pm.test("Status code should have an 204", function () {
+    pm.response.to.have.status("OK");
+});
+
+var jsonData = pm.response.json();
+console.log(jsonData)
+
+pm.environment.set("JustMeId", jsonData[2].id);
+
+pm.test("Confirm that the book with name has value", function () {    
+    pm.expect(jsonData[3].name).to.eql("The Midnight Library");
+});
+
+pm.test("Confirm that the book with Id has value", function () {    
+    pm.expect(jsonData[2].id).to.eql(3);
+
+});
+

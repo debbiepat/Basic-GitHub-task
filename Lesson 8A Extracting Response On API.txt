@@ -1,0 +1,30 @@
+pm.test("Status code should be 200", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("Status code name should have an OK string", function () {
+    pm.response.to.have.status("OK");
+});
+
+var jsonData = pm.response.json();
+console.log(jsonData)
+
+pm.environment.set("entryId", jsonData[2].id);
+pm.environment.set("entryType", jsonData[4].type);
+
+pm.test("Confirm that the total result is 6", function () {    
+    pm.expect(jsonData.length).to.eql(6);
+});
+
+pm.test("Confirm that the entry with name has value", function () {    
+    pm.expect(jsonData[1].name).to.eql("Just as I Am");
+});
+
+pm.test("Confirm that the entry with Id has value", function () {    
+    pm.expect(jsonData[2].id).to.eql(3);
+});
+
+pm.test("Confirm that Untamed is present in the list or result", function () {    
+    pm.expect(pm.response.text()).to.include("Untamed");
+});
+
+
